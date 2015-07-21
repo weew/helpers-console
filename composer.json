@@ -1,0 +1,24 @@
+{
+    "name": "weew/php-helpers-cli",
+    "description": "Collection of useful php command line helpers.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxim Kott",
+            "email": "maximkott@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/cli.php",
+            "src/style.php"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7"
+    },
+    "require": {
+        "weew/php-helpers-string": "0.*",
+        "weew/php-helpers-array": "0.*"
+    }
+}
