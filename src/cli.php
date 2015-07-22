@@ -62,17 +62,20 @@ if ( ! function_exists('cli_ask')) {
      * Ask a question trough the terminal.
      *
      * @param $string
+     * @param bool $default
      *
      * @return bool
      */
-    function cli_ask($string) {
-        $line = cli_prompt(
-            s('%s (y/n)', $string)
-        );
+    function cli_ask($string, $default = false) {
+        $suffix = $default ? '(Y/n)' : '(y/N)';
+
+        $line = cli_prompt(s('%s %s', $string, $suffix));
 
         if ($line == 'y' or $line == 'yes') {
             return true;
-        } else {
+        } else if (empty($line) and $default) {
+            return true;
+        }else {
             return false;
         }
     }
