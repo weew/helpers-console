@@ -47,13 +47,30 @@ if ( ! function_exists('cli_prompt')) {
         }
 
         fwrite(STDOUT, $string);
-        $line = trim(fgets(STDIN));
+        $input = trim(fgets(STDIN));
 
-        if (strlen(trim($line)) == 0) {
-            $line = $default;
+        if (strlen(trim($input)) == 0) {
+            $input = $default;
         }
 
-        return $line;
+        return $input;
+    }
+}
+
+if ( ! function_exists('cli_force_prompt')) {
+    /**
+     * Force user to enter some input.
+     *
+     * @param $string
+     *
+     * @return string
+     */
+    function cli_force_prompt($string) {
+        do {
+            $input = cli_prompt($string);
+        } while ($input === null);
+
+        return $input;
     }
 }
 
@@ -69,11 +86,11 @@ if ( ! function_exists('cli_ask')) {
     function cli_ask($string, $default = false) {
         $suffix = $default ? '(Y/n)' : '(y/N)';
 
-        $line = cli_prompt(s('%s %s', $string, $suffix));
+        $input = cli_prompt(s('%s %s', $string, $suffix));
 
-        if ($line == 'y' or $line == 'yes') {
+        if ($input == 'y' or $input == 'yes') {
             return true;
-        } else if (empty($line) and $default) {
+        } else if (empty($input) and $default) {
             return true;
         }else {
             return false;
