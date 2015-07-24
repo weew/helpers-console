@@ -68,9 +68,11 @@ if ( ! function_exists('cli_force_prompt')) {
     function cli_force_prompt($string) {
         do {
             $input = cli_prompt($string);
-        } while ($input === null);
 
-        return $input;
+            if ($input !== null) {
+                return $input;
+            }
+        } while (true);
     }
 }
 
@@ -129,32 +131,43 @@ if ( ! function_exists('cli_wait_for_no')) {
 }
 
 if ( ! function_exists('cli_choose')) {
-    function cli_choose($string, array $options) {
-        system('stty -icanon');
-        $up = '^[[A';
-        $down = '^[[B';
-        $up = 'u';
+    function cli_choose($string, array $options, $default = null, $newline = true) {
+        $options = array_values($options);
+        $indent = str_repeat(" ", strspn($string, " "));
+        $indent.= str_repeat("\t", strspn($string, "\t"));
 
-        cli_say($string);
 
-        $selectedIndex = 0;
-
-        foreach ($options as $index => $option) {
-            $tick = ' ';
-
-            if ($selectedIndex === $index) {
-                $tick = 'x';
+        $choices = [];
+        foreach ($options as $key => $value) {
+            if ($newline) {
+                $value = $indent . s("- [%s] %s", $key, $value);
+            } else {
+                $value = s("[%s] %s", $key, $value);
             }
 
-            cli_say(sprintf('[%s] %s', $tick, $option));
+
+            $choices[] = $value;
         }
 
-        while ($c = fgetc(STDIN)) {
+        if ($newline) {
+            $choicesString = implode("\n", $choices);
+        } else {
+            $choicesString = $indent . implode(', ', $choices);
+        }
 
-            if ($c == $up) {
-                exit;
+        do {
+            cli_say($string);
+            cli_say($choicesString);
+            $choice = cli_prompt(s("%sYour choice?", $indent), $default);
+
+            if ($option = array_get($options, $choice)) {
+                return $option;
             }
-        }
+
+            cli_say();
+            cli_say(s("%sInvalid option %s.", $indent, $choice));
+            cli_say();
+        } while(true);
     }
 }
 
