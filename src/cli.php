@@ -36,12 +36,17 @@ if ( ! function_exists('cli_prompt')) {
      *
      * @param $string
      * @param null $default
+     * @param null $defaultDisplay
      *
      * @return string
      */
-    function cli_prompt($string, $default = null) {
+    function cli_prompt($string, $default = null, $defaultDisplay = null) {
+        if ($defaultDisplay === null) {
+            $defaultDisplay = $default;
+        }
+
         if ($default !== null) {
-            $string = s('%s (%s): ', $string, $default);
+            $string = s('%s (%s): ', $string, $defaultDisplay);
         } else {
             $string = s('%s: ', $string);
         }
