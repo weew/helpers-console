@@ -30,7 +30,7 @@ if ( ! function_exists('cli_color')) {
             'white'            => '97',
         ];
 
-        if ($color === null or ! array_has($color, $colors)) {
+        if ($color === null or ! array_has($colors, $color)) {
             return $string;
         } else {
             $color = $colors[$color];
@@ -70,7 +70,7 @@ if ( ! function_exists('cli_highlight')) {
             'white'         => '107',
         ];
 
-        if ($color === null or  ! array_has($color, $colors)) {
+        if ($color === null or  ! array_has($colors, $color)) {
             return $string;
         } else {
             $color = $colors[$color];
