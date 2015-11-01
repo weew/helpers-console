@@ -14,11 +14,12 @@
             "src/style.php"
         ]
     },
-    "require-dev": {
-        "phpunit/phpunit": "^4.7"
-    },
     "require": {
         "weew/php-helpers-string": "0.*",
         "weew/php-helpers-array": "0.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.7",
+        "satooshi/php-coveralls": "^0.6.1"
     }
 }
