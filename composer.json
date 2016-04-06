@@ -1,5 +1,5 @@
 {
-    "name": "weew/php-helpers-cli",
+    "name": "weew/php-helpers-console",
     "description": "Collection of useful php command line helpers.",
     "license": "MIT",
     "authors": [
@@ -10,7 +10,7 @@
     ],
     "autoload": {
         "files": [
-            "src/cli.php",
+            "src/console.php",
             "src/style.php"
         ]
     },
